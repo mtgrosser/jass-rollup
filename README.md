@@ -1,2 +1,2 @@
-# jass-rollup-esm
-Compile Node modules to ESM with Rollup and Sprockets
+# jass-rollup
+Rollup for Sprockets and the Rails asset pipeline
