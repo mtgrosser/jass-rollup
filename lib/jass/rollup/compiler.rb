@@ -1,4 +1,4 @@
-class Jass::Rollup::Compiler < Jass::Core
+class Jass::Rollup::Compiler < Nodo::Core
   require :rollup,
           loadConfigFile: 'rollup/dist/loadConfigFile',
           commonjs: '@rollup/plugin-commonjs', 

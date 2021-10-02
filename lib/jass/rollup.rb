@@ -1,4 +1,4 @@
-require 'jass/core'
+require 'nodo'
 
 require_relative 'rollup/version'
 require_relative 'rollup/compiler'

@@ -5,7 +5,7 @@ require 'jass/rollup/version'
 Gem::Specification.new do |s|
   s.name          = 'jass-rollup'
   s.version       = Jass::Rollup::VERSION
-  s.date          = '2021-09-28'
+  s.date          = '2021-10-02'
   s.authors       = ['Matthias Grosser']
   s.email         = ['mtgrosser@gmx.net']
   s.license       = 'MIT'
@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   
   s.required_ruby_version = '>= 2.3.0'
   
-  s.add_dependency 'jass-core'
+  s.add_dependency 'nodo', '>= 1.5.0'
 
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'
