@@ -5,20 +5,18 @@ class Jass::Rollup::Compiler < Nodo::Core
           commonjs: '@rollup/plugin-commonjs', 
           nodeResolve: '@rollup/plugin-node-resolve'
 
-  class << self
-    def_delegators :instance, :compile, :compile_esm
-  end
-  
   def compile(config)
     result = bundle(config)
     result.fetch('output').first.slice('code', 'map')
   end
+  class_function :compile
   
   def compile_esm(import, export = nil)
     export ||= import
     result = bundle_esm(import, export)
     result.fetch('output').first.slice('code', 'map')
   end
+  class_function :compile_esm
   
   function :bundle_esm, <<~'JS'
     async (mod, name) => {
@@ -48,7 +46,6 @@ class Jass::Rollup::Compiler < Nodo::Core
       
       let inputOptions = options[0];
       let outputOptions = options[0].output[0];
-      outputOptions['format'] = 'iife';
       let inputPlugins = inputOptions.plugins;
 
       if (inputPlugins && inputPlugins.length == 1 && inputPlugins[0].name == 'stdin') {
