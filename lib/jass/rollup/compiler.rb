@@ -1,40 +1,35 @@
 class Jass::Rollup::Compiler < Nodo::Core
   require :rollup,
           loadConfigFile: 'rollup/dist/loadConfigFile',
-          virtual: '@rollup/plugin-virtual',
           commonjs: '@rollup/plugin-commonjs', 
           nodeResolve: '@rollup/plugin-node-resolve'
 
-  def compile(config)
+  class_function def compile(config)
     result = bundle(config)
     result.fetch('output').first.slice('code', 'map')
   end
-  class_function :compile
   
-  def compile_esm(import, export = nil)
-    export ||= import
-    result = bundle_esm(import, export)
+  class_function def compile_esm(mod)
+    result = bundle_esm(mod)
     result.fetch('output').first.slice('code', 'map')
   end
-  class_function :compile_esm
+  
+  class_function def compile_entry(entry)
+    result = bundle_entry(entry)
+    result.fetch('output').first.slice('code', 'map')
+  end
+  
+  function :default_plugins, <<~'JS'
+    () => [
+      nodeResolve.nodeResolve({ moduleDirectories: [process.env.NODE_PATH] }),
+      commonjs({ requireReturnsDefault: 'namespace', defaultIsModuleExports: true })
+    ]
+  JS
   
   function :bundle_esm, <<~'JS'
-    async (mod, name) => {
-      const code = `import * as ${name} from "${mod}"; export default ${name};`;
-      const inputOptions = {
-        input: '__jass_entry__',
-        plugins: [
-          nodeResolve.nodeResolve({ moduleDirectories: [process.env.NODE_PATH] }),
-          virtual({ __jass_entry__: code }),
-          commonjs({ requireReturnsDefault: 'namespace', defaultIsModuleExports: true })
-        ]
-      };
-      const outputOptions = {
-        format: 'es',
-        exports: 'named'
-      };
-      const bundle = await rollup.rollup(inputOptions);
-      return await bundle.generate(outputOptions);
+    async (mod) => {
+      const entry = require.resolve(mod);
+      return await bundle_entry(entry);
     }
   JS
   
@@ -49,10 +44,24 @@ class Jass::Rollup::Compiler < Nodo::Core
       let inputPlugins = inputOptions.plugins;
 
       if (inputPlugins && inputPlugins.length == 1 && inputPlugins[0].name == 'stdin') {
-        inputPlugins.unshift(commonjs({ requireReturnsDefault: 'namespace',  defaultIsModuleExports: true }));
-        inputPlugins.unshift(nodeResolve.nodeResolve({ moduleDirectories: [process.env.NODE_PATH] }));
+        inputPlugins.push(...default_plugins().reverse());
       }
 
+      const bundle = await rollup.rollup(inputOptions);
+      return await bundle.generate(outputOptions);
+    }
+  JS
+  
+  function :bundle_entry, <<~'JS'
+    async (entry) => {
+      const inputOptions = {
+        input: entry,
+        plugins: default_plugins()
+      };
+      const outputOptions = {
+        format: 'es',
+        exports: 'named'
+      };
       const bundle = await rollup.rollup(inputOptions);
       return await bundle.generate(outputOptions);
     }

@@ -1,6 +1,8 @@
 module Jass
   module Rollup
-    class EsmDirectiveProcessor < Sprockets::DirectiveProcessor
+    class DirectiveProcessor < Sprockets::DirectiveProcessor
+      DIRECTIVES = %w[rollup require_esm require_npm].freeze
+      
 =begin  
       def _call(input)
         @environment  = input[:environment]
@@ -37,13 +39,13 @@ module Jass
         body   = $' || source
 
         header, directives = extract_directives(header)
-        directives.map! { |_, name, import, export = nil| [import, export] if name == 'esm' }
+        directives.select! { |_, name, *args| DIRECTIVES.include?(name) }
         directives.compact!
 
         data = +""
         data.force_encoding(body.encoding)
         data << header unless header.empty?
-        data << process_esm_directives(directives)
+        data << process_matching_directives(directives)
         data << body
         # Ensure body ends in a new line
         data << "\n" if data.length > 0 && data[-1] != "\n"
@@ -53,12 +55,28 @@ module Jass
       
       def process_directives(_); end
       
-      def process_esm_directives(directives)
-        directives.map { |import, export| Compiler.compile_esm(import, export).fetch('code') }.join("\n")
+      def process_matching_directives(directives)
+        directives.inject('') do |code, (line_number, name, *args)|
+          begin
+            code << send("process_#{name}_directive", line_number, *args)
+            code << "\n"
+          rescue => e
+            e.set_backtrace(["#{@filename}:#{line_number}"] + e.backtrace)
+            raise e
+          end
+        end
+      end
+      
+      def process_require_esm_directive(line_number, mod)
+        Compiler.compile_esm(mod).fetch('code')
       end
 
-      def process_esm_directive(path, *args)
-        # do nothing
+      def process_rollup_directive(line_number, entry, *args)
+        Compiler.compile_entry(entry).fetch('code')
+      end
+      
+      def process_require_npm_directive(line_number, path, *args)
+        File.read(File.expand_path(path, Nodo.modules_root))
       end
     end
   end
