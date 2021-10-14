@@ -1,7 +1,7 @@
 module Jass
   module Rollup
     class DirectiveProcessor < Sprockets::DirectiveProcessor
-      DIRECTIVES = %w[rollup require_esm require_npm].freeze
+      DIRECTIVES = %w[rollup rollup_esm require_npm].freeze
       
 =begin  
       def _call(input)
@@ -67,7 +67,7 @@ module Jass
         end
       end
       
-      def process_require_esm_directive(line_number, mod)
+      def process_rollup_esm_directive(line_number, mod)
         Compiler.compile_esm(mod).fetch('code')
       end
 

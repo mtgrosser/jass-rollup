@@ -49,13 +49,13 @@ To bundle a `npm` module as ES module:
 //= rollup vendor/node_modules/rxjs/dist/esm5/index.js
 ```
 
-### require_esm
+### rollup_esm
 
 The `require_esm` directive will bundle a `npm` module referenced by its
 name as ES module:
 
 ```js
-//= require_esm currency.js
+//= rollup_esm currency.js
 ```
 
 ### Bundling with custom rollup configurations
