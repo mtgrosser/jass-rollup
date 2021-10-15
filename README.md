@@ -31,7 +31,7 @@ $ yarn add rollup @rollup/plugin-commonjs @rollup/plugin-node-resolve
 
 ### Node.js
 
-`Jass::Vue::SFC` depends on [Nodo](https://github.com/mtgrosser/nodo), which requires a working Node.js installation.
+`Jass::Rollup` depends on [Nodo](https://github.com/mtgrosser/nodo), which requires a working Node.js installation.
 
 ## ⚡️ Usage
 
