@@ -4,7 +4,7 @@
 
 `Jass::Rollup` integrates the [Rollup](https://rollupjs.org) JS bundler with Sprockets and the Rails asset pipeline.
 
-## Motivation
+## 💡 Motivation
 
 JavaScript build pipelines tend to be a complicated mess consisting of dev servers,
 an infinite number of `npm` dependencies and other "opinionated" conventions (and lack thereof).
@@ -13,7 +13,7 @@ The `Jass` gem series provide a straightforward way of integrating modern JS too
 with the existing Rails asset pipeline, while adhering to established workflows
 for asset processing in Rails applications.
 
-## Installation
+## 📦 Installation
 
 ### Gemfile
 
@@ -33,7 +33,7 @@ $ yarn add rollup @rollup/plugin-commonjs @rollup/plugin-node-resolve
 
 `Jass::Vue::SFC` depends on [Nodo](https://github.com/mtgrosser/nodo), which requires a working Node.js installation.
 
-## Usage
+## ⚡️ Usage
 
 `Jass::Rollup` provides two new directives to use in your JS assets, as well as
 a new Sprockets file extension for rollup bundle config files.
@@ -82,10 +82,10 @@ export default {
 This asset will be bundled to `main.js`.
 
 
-## Other Jass gems for the asset pipeline
+## 💎 Other Jass gems for the asset pipeline
 
-💎 [Jass::Esbuild](https://github.com/mtgrosser/jass-esbuild) – esbuild support for Sprockets
+[Jass::Esbuild](https://github.com/mtgrosser/jass-esbuild) – esbuild support for Sprockets
 
-💎 [Jass::Vue::SFC](https://github.com/mtgrosser/jass-vue-sfc) – Vue Single File Component support for Sprockets
+[Jass::Vue::SFC](https://github.com/mtgrosser/jass-vue-sfc) – Vue Single File Component support for Sprockets
 
-💎 [Jass::React::JSX](https://github.com/mtgrosser/jass-react-jsx) – React JSX support for Sprockets
+[Jass::React::JSX](https://github.com/mtgrosser/jass-react-jsx) – React JSX support for Sprockets
