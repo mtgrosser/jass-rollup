@@ -4,10 +4,10 @@
 
 `Jass::Rollup` integrates the [Rollup](https://rollupjs.org) JS bundler with Sprockets and the Rails asset pipeline.
 
-## Why?
+## Motivation
 
 JavaScript build pipelines tend to be a complicated mess consisting of dev servers,
-an infinite number of `npm` dependencies and other "opiniated" conventions (and lack thereof).
+an infinite number of `npm` dependencies and other "opinionated" conventions (and lack thereof).
 
 The `Jass` gem series provide a straightforward way of integrating modern JS tooling
 with the existing Rails asset pipeline, while adhering to established workflows
