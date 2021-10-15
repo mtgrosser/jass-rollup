@@ -15,17 +15,23 @@ for asset processing in Rails applications.
 
 ## Installation
 
-In your Gemfile:
+### Gemfile
 
 ```ruby
 gem 'jass-rollup'
 ```
+
+### JS dependencies
 
 Add `rollup` to your JS dependencies:
 
 ```sh
 $ yarn add rollup @rollup/plugin-commonjs @rollup/plugin-node-resolve
 ```
+
+### Node.js
+
+`Jass::Vue::SFC` depends on [Nodo](https://github.com/mtgrosser/nodo), which requires a working Node.js installation.
 
 ## Usage
 
