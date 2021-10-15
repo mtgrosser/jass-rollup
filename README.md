@@ -74,3 +74,12 @@ export default {
 ```
 
 This asset will be bundled to `main.js`.
+
+
+## Other Jass gems for the asset pipeline
+
+💎 [Jass::Esbuild](https://github.com/mtgrosser/jass-esbuild) – esbuild support for Sprockets
+
+💎 [Jass::Vue::SFC](https://github.com/mtgrosser/jass-vue-sfc) – Vue Single File Component support for Sprockets
+
+💎 [Jass::React::JSX](https://github.com/mtgrosser/jass-react-jsx) – React JSX support for Sprockets
