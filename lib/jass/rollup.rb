@@ -15,5 +15,5 @@ if defined?(Sprockets)
   
   Sprockets.register_mime_type 'application/javascript+rollup-config', extensions: %w[.js.rollup .rollup], charset: :unicode
   Sprockets.register_transformer 'application/javascript+rollup-config', 'application/javascript', Jass::Rollup::Processor
-  Sprockets.register_preprocessor 'application/javascript', Jass::Rollup::DirectiveProcessor.new(comments: ['//', ['/*', '*/']])
+  Sprockets.register_preprocessor 'application/javascript', Jass::Rollup::DirectiveProcessor
 end
