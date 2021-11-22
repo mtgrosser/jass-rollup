@@ -1,8 +1,12 @@
 class Jass::Rollup::Compiler < Nodo::Core
   require :rollup,
-          loadConfigFile: 'rollup/dist/loadConfigFile',
           commonjs: '@rollup/plugin-commonjs', 
           nodeResolve: '@rollup/plugin-node-resolve'
+
+  # workaround for https://github.com/rollup/rollup/issues/4251
+  script <<~'JS'
+    const loadConfigFile = require(path.join(path.dirname(require.resolve('rollup')), 'loadConfigFile'));
+  JS
 
   class_function def compile(config)
     result = bundle(config)
